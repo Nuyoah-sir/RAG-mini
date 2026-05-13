@@ -63,9 +63,9 @@ pip install torch==2.5.1+cu121 --index-url https://download.pytorch.org/whl/cu12
 复制 `.env.example` 为 `.env`，填写你的配置：
 
 ```env
-OPENAI_API_BASE="http://k8s.sgurad.com:7875/v1"
+OPENAI_API_BASE=""
 OPENAI_API_KEY=""
-LLM_MODEL_NAME="/home/sxqai/gemma-4-26b-a4b-it"
+LLM_MODEL_NAME=""
 DEEPSEEK_API_KEY="你的DeepSeek API密钥"
 RERANKER_MODEL="deepseek-rerank"
 ```
@@ -99,8 +99,8 @@ python api.py
 from rag_sdk import RAGEngine
 
 engine = RAGEngine(
-    llm_base_url="http://k8s.sgurad.com:7875/v1",
-    llm_model="/home/sxqai/gemma-4-26b-a4b-it",
+    llm_base_url="",
+    llm_model="",
     deepseek_api_key="sk-xxx",
 )
 
