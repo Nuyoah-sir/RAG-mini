@@ -1,0 +1,11 @@
+.venv/
+__pycache__/
+*.pyc
+*.pyo
+.idea/
+.env
+data/
+vector_db/
+*.faiss
+*.pkl
+kb_config.json
