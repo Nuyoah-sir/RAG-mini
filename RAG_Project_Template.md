@@ -28,7 +28,7 @@ rag-project/
 ### 1.1 系统要求
 - Python 3.10-3.12（推荐 3.11）
 - 内存：≥4GB（纯 CPU 即可流畅运行）
-- 网络：能访问 http://k8s.sgurad.com:7875 和 DeepSeek API
+- 网络：能访问 自己部署的大模型 和 DeepSeek API
 
 ### 1.2 安装依赖
 
@@ -67,9 +67,9 @@ pip install -r requirements.txt
 
 ```env
 # 私有部署Gemma大模型配置（已为你填好，无需修改）
-OPENAI_API_BASE="http://k8s.sgurad.com:7875/v1"
+OPENAI_API_BASE=""
 OPENAI_API_KEY=""
-LLM_MODEL_NAME="/home/sxqai/gemma-4-26b-a4b-it"
+LLM_MODEL_NAME=""
 
 # DeepSeek重排序API配置（在这里填写你的DeepSeek API密钥）
 DEEPSEEK_API_KEY="你的DeepSeek API密钥"
@@ -510,7 +510,7 @@ python app.py
 
 ## 注意事项
 
-- 私有大模型地址 http://k8s.sgurad.com:7875/v1 已预填，无需修改
+- 私有大模型地址  已预填，无需修改
 - DeepSeek API 密钥必须填写，否则重排序功能无法使用
 - 所有文档和向量数据库都存储在本地，不会上传到任何第三方服务器
 - 首次运行会自动下载 BAAI/bge-small-zh-v1.5 嵌入模型（约 100MB）
