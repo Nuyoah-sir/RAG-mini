@@ -5,8 +5,8 @@ RAG SDK — 多知识库检索引擎
     from rag_sdk import RAGEngine
 
     engine = RAGEngine(
-        llm_base_url="http://k8s.sgurad.com:7875/v1",
-        llm_model="/home/sxqai/gemma-4-26b-a4b-it",
+        llm_base_url="",
+        llm_model="",
         deepseek_api_key="sk-xxx",
     )
 
