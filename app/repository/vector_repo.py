@@ -29,6 +29,7 @@ def build_vector_store(chunks: list[Document], kb_name: str,
         pm_path = kb_path / "parent_map.pkl"
         with open(pm_path, "wb") as f:
             pickle.dump(parent_map, f)
+        _parent_maps[kb_name] = parent_map
         logger.info("父块映射已保存: %s (%d entries)", pm_path, len(parent_map))
 
     # 同时构建 BM25 关键词索引
@@ -61,9 +62,12 @@ def load_vector_store(kb_name: str) -> FAISS | None:
     # 加载父块映射
     pm_path = kb_path / "parent_map.pkl"
     if pm_path.exists():
-        with open(pm_path, "rb") as f:
-            _parent_maps[kb_name] = pickle.load(f)
-        logger.info("父块映射已加载: [%s] (%d entries)", kb_name, len(_parent_maps[kb_name]))
+        try:
+            with open(pm_path, "rb") as f:
+                _parent_maps[kb_name] = pickle.load(f)
+            logger.info("父块映射已加载: [%s] (%d entries)", kb_name, len(_parent_maps[kb_name]))
+        except Exception:
+            logger.warning("父块映射加载失败，忽略: [%s]", kb_name)
 
     # 同时加载 BM25 索引
     if settings.bm25_enabled:
