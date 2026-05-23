@@ -4,18 +4,21 @@ from langchain_core.documents import Document
 from app.core.config import get_settings
 
 
-def _make_parent_splitter():
-    settings = get_settings()
+def _make_parent_splitter(settings=None):
+    if settings is None:
+        settings = get_settings()
     return RecursiveCharacterTextSplitter(
         chunk_size=settings.parent_chunk_size,
         chunk_overlap=settings.parent_chunk_overlap,
+        # 故意排除 "："：父块粒度更粗，让段落级边界更突出
         separators=["\n\n", "\n", "。", "？", "！", "；", " ", ""],
         length_function=len,
     )
 
 
-def _make_child_splitter():
-    settings = get_settings()
+def _make_child_splitter(settings=None):
+    if settings is None:
+        settings = get_settings()
     return RecursiveCharacterTextSplitter(
         chunk_size=settings.child_chunk_size,
         chunk_overlap=settings.child_chunk_overlap,
@@ -26,8 +29,9 @@ def _make_child_splitter():
 
 def dual_zone_split(documents: list[Document]) -> tuple[list[Document], dict[str, Document]]:
     """双区分块：返回 (子块列表, parent_map)"""
-    parent_splitter = _make_parent_splitter()
-    child_splitter = _make_child_splitter()
+    settings = get_settings()
+    parent_splitter = _make_parent_splitter(settings)
+    child_splitter = _make_child_splitter(settings)
 
     parent_chunks = parent_splitter.split_documents(documents)
 

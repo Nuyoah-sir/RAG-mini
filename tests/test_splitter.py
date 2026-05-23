@@ -1,6 +1,6 @@
 import pytest
 from langchain_core.documents import Document
-from app.component.splitter import dual_zone_split
+from app.component.splitter import dual_zone_split, create_splitter
 
 
 class TestDualZoneSplit:
@@ -65,3 +65,11 @@ class TestDualZoneSplit:
         # 所有子块的 parent_id 都存在于 parent_map 中
         parent_ids = set(c.metadata["parent_id"] for c in child_chunks)
         assert parent_ids.issubset(set(parent_map.keys()))
+
+    def test_create_splitter_backward_compat(self):
+        """旧接口 create_splitter 仍然可用"""
+        splitter = create_splitter()
+        docs = [Document(page_content="测试文档内容。" * 10, metadata={"source": "test.txt"})]
+        chunks = splitter.split_documents(docs)
+        assert len(chunks) > 0
+        assert all(isinstance(c, Document) for c in chunks)
